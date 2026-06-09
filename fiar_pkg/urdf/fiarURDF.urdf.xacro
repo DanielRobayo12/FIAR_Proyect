@@ -1,0 +1,92 @@
+<?xml version="1.0"?>
+<robot name="fiar_bot" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+    <!-- ========= Xacro Import =========-->
+    <xacro:include filename="$(find fiar_pkg)/urdf/frontLeg.urdf.xacro" />
+    <xacro:include filename="materials.urdf.xacro"/>
+
+   
+    <!-- === base_link ===-->
+    <link name="body">
+        <visual>
+            <geometry>
+                <box size="0.30 0.17 0.125"/>
+            </geometry>
+            <material name="CasterGrey"/>
+        </visual>
+        <collision>
+            <geometry>
+                <box size="0.30 0.17 0.125"/>
+            </geometry>
+        </collision>
+        <inertial>
+            <mass value="0.5"/>
+            <inertia
+                ixx="0.00014167" ixy="0.0" ixz="0.0"
+                iyy="0.00074167" iyz="0.0" izz="0.00080833"/>
+        </inertial>
+    </link>
+
+
+
+    <!-- ========= Xacro Include Legs=========-->
+    <xacro:front_leg link1="legR1" link2="legR2" wheel="wR1" joint1="legR2_to_legR1" joint2="wheel_to_legR2" />
+    <xacro:front_leg link1="legL1" link2="legL2" wheel="wL1" joint1="legL2_to_legL1" joint2="wheel_to_legL2"/>
+    <xacro:front_leg link1="legBackR1" link2="legBackR2" wheel="wR2" joint1="legBackR2_to_legBackR1" joint2="wheel_to_legBackR2"/>
+    <xacro:front_leg link1="legBackL1" link2="legBackL2" wheel="wL2" joint1="legBackL2_to_legBackL1" joint2="wheel_to_legBackL2"/>
+    <!-- === Xacro Include Head ====-->
+    <xacro:topHead head="head" neck="neck"/>
+
+    <!-- === leg1_to_body ===-->
+    <joint name="legL1_to_body" type="revolute">
+        <parent link="body"/>
+        <child link="legR1"/>
+        <origin xyz="0.125 0.1 0" rpy="1.5707 0 0"/>
+        <axis xyz="0 0 1"/>
+        <limit lower="-0" upper="-3.1415" effort="0.01" velocity="0.4"/>
+        <dynamics damping="1" friction="1"/>
+    </joint>
+    <!-- === leg2_to_body ===-->
+    <joint name="legL2_to_body" type="revolute">
+        <parent link="body"/>
+        <child link="legL1"/>
+        <origin xyz="0.125 -0.1 0" rpy="-1.5707 0 0"/>
+        <axis xyz="0 0 -1"/>
+        <limit lower="0" upper="-3.1415" effort="0.01" velocity="0.4"/>
+        <dynamics damping="1" friction="1"/>
+    </joint>
+
+    <!-- === leg3_to_body === -->
+    <joint name="legB1_to_body" type="revolute"> 
+        <parent link="body"/>
+        <child link="legBackR1"/>
+        <origin xyz="-0.125 0.1 0" rpy="1.5707 0 0"/>
+        <axis xyz="0 0 1"/>
+        <limit lower="0" upper="-3.1415" effort="0.01" velocity="0.4"/>
+        <dynamics damping="1" friction="1"/>
+    </joint>
+    
+    <!-- === leg4_to_body ===-->
+    <joint name="legB2_to_body" type="revolute">
+        <parent link="body"/>
+        <child link="legBackL1"/>
+        <origin xyz="-0.125 -0.1 0" rpy="-1.5707 0 0"/>
+        <axis xyz="0 0 -1"/>
+        <limit lower="0" upper="-3.1415" effort="0.01" velocity="0.4"/>
+         <dynamics damping="1" friction="1"/>
+    </joint>
+
+    <!-- === Head to Boty ===-->
+    <joint name="neck_to_body" type="revolute">
+        <parent link="body"/>
+        <child link="neck"/>
+        <origin xyz="0.14 0 0.0875"/>
+        <axis xyz="0 0 1"/>
+        <limit lower="0" upper="-3.1415" effort="0.01" velocity="0.4"/>
+         <dynamics damping="1" friction="1"/>
+    </joint>
+
+
+
+
+</robot>
