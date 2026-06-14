@@ -19,6 +19,9 @@ setup(
         ('share/fiar_pkg/config', [
         'config/bridge_config.yaml'
         ]),
+        ('share/fiar_pkg/config', [
+        'config/gz_parameters.yaml'
+        ]),
         ('share/fiar_pkg/worlds', [
         'worlds/world.sdf'
         ]),

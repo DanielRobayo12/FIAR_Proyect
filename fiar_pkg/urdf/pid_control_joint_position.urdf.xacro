@@ -1,0 +1,181 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+    <gazebo>
+        <!-- ============= control leg 1 ============= -->
+        <plugin filename="gz-sim-joint-position-controller-system" name="gz::sim::systems::JointPositionController">
+            <joint_name>/fiar/LF1</joint_name>
+            <p_gain>12.0</p_gain>
+            <i_gain>0.05</i_gain>
+            <d_gain>0.1</d_gain>
+            <i_max>0.2</i_max>
+            <i_min>-0.2</i_min>
+            <cmd_max>10</cmd_max>
+            <cmd_min>-10</cmd_min>
+            <initial_position>1.57</initial_position>
+        </plugin>
+        <!--LF2-->
+        <plugin filename="gz-sim-joint-position-controller-system" name="gz::sim::systems::JointPositionController">
+            <joint_name>/fiar/LF2</joint_name>
+            <p_gain>12.0</p_gain>
+            <i_gain>0.05</i_gain>
+            <d_gain>0.1</d_gain>
+            <i_max>0.2</i_max>
+            <i_min>-0.2</i_min>
+            <cmd_max>10</cmd_max>
+            <cmd_min>-10</cmd_min>
+            <initial_position>0.0</initial_position>
+        </plugin>
+         <!--w1-->
+        <plugin filename="gz-sim-joint-position-controller-system" name="gz::sim::systems::JointPositionController">
+            <joint_name>/fiar/w1</joint_name>
+            <p_gain>12.0</p_gain>
+            <i_gain>0.05</i_gain>
+            <d_gain>0.1</d_gain>
+            <i_max>0.2</i_max>
+            <i_min>-0.2</i_min>
+            <cmd_max>10</cmd_max>
+            <cmd_min>-10</cmd_min>
+            <initial_position>0.0</initial_position>
+        </plugin>
+
+        <!-- ============= control leg 2 ============= -->
+        <plugin filename="gz-sim-joint-position-controller-system" name="gz::sim::systems::JointPositionController">
+            <joint_name>/fiar/RF1</joint_name>
+            <p_gain>12.0</p_gain>
+            <i_gain>0.05</i_gain>
+            <d_gain>0.1</d_gain>
+            <i_max>0.2</i_max>
+            <i_min>-0.2</i_min>
+            <cmd_max>10</cmd_max>
+            <cmd_min>-10</cmd_min>
+            <initial_position>0.0</initial_position>
+        </plugin>
+        <!--RF2-->
+        <plugin filename="gz-sim-joint-position-controller-system" name="gz::sim::systems::JointPositionController">
+            <joint_name>/fiar/RF2</joint_name>
+            <p_gain>12.0</p_gain>
+            <i_gain>0.05</i_gain>
+            <d_gain>0.1</d_gain>
+            <i_max>0.2</i_max>
+            <i_min>-0.2</i_min>
+            <cmd_max>10</cmd_max>
+            <cmd_min>-10</cmd_min>
+            <initial_position>0.0</initial_position>
+        </plugin>
+         <!--w2-->
+        <plugin filename="gz-sim-joint-position-controller-system" name="gz::sim::systems::JointPositionController">
+            <joint_name>/fiar/w2</joint_name>
+            <p_gain>12.0</p_gain>
+            <i_gain>0.05</i_gain>
+            <d_gain>0.1</d_gain>
+            <i_max>0.2</i_max>
+            <i_min>-0.2</i_min>
+            <cmd_max>10</cmd_max>
+            <cmd_min>-10</cmd_min>
+            <initial_position>0.0</initial_position>
+        </plugin>
+
+        <!-- ============= control leg 3 ============= -->
+        <plugin filename="gz-sim-joint-position-controller-system" name="gz::sim::systems::JointPositionController">
+            <joint_name>/fiar/LB1_pos</joint_name>
+            <p_gain>12.0</p_gain>
+            <i_gain>0.05</i_gain>
+            <d_gain>0.1</d_gain>
+            <i_max>0.2</i_max>
+            <i_min>-0.2</i_min>
+            <cmd_max>10</cmd_max>
+            <cmd_min>-10</cmd_min>
+            <initial_position>1.57</initial_position>
+        </plugin>
+        <!--LB2-->
+        <plugin filename="gz-sim-joint-position-controller-system" name="gz::sim::systems::JointPositionController">
+            <joint_name>/fiar/LB2_pos</joint_name>
+            <p_gain>12.0</p_gain>
+            <i_gain>0.05</i_gain>
+            <d_gain>0.1</d_gain>
+            <i_max>0.2</i_max>
+            <i_min>-0.2</i_min>
+            <cmd_max>10</cmd_max>
+            <cmd_min>-10</cmd_min>
+            <initial_position>1.57</initial_position>
+        </plugin>
+         <!--w3-->
+        <plugin filename="gz-sim-joint-position-controller-system" name="gz::sim::systems::JointPositionController">
+            <joint_name>/fiar/w3_pos</joint_name>
+            <p_gain>12.0</p_gain>
+            <i_gain>0.05</i_gain>
+            <d_gain>0.1</d_gain>
+            <i_max>0.2</i_max>
+            <i_min>-0.2</i_min>
+            <cmd_max>10</cmd_max>
+            <cmd_min>-10</cmd_min>
+            <initial_position>0.0</initial_position>
+        </plugin>
+
+        <!-- ============= control leg 4 ============= -->
+        <plugin filename="gz-sim-joint-position-controller-system" name="gz::sim::systems::JointPositionController">
+            <joint_name>/fiar/RB1_pos</joint_name>
+            <p_gain>12.0</p_gain>
+            <i_gain>0.05</i_gain>
+            <d_gain>0.1</d_gain>
+            <i_max>0.2</i_max>
+            <i_min>-0.2</i_min>
+            <cmd_max>10</cmd_max>
+            <cmd_min>-10</cmd_min>
+            <initial_position>0.0</initial_position>
+        </plugin>
+        <!--RB2-->
+        <plugin filename="gz-sim-joint-position-controller-system" name="gz::sim::systems::JointPositionController">
+            <joint_name>/fiar/RB2_pos</joint_name>
+            <p_gain>12.0</p_gain>
+            <i_gain>0.05</i_gain>
+            <d_gain>0.1</d_gain>
+            <i_max>0.2</i_max>
+            <i_min>-0.2</i_min>
+            <cmd_max>10</cmd_max>
+            <cmd_min>-10</cmd_min>
+            <initial_position>0.0</initial_position>
+        </plugin>
+         <!--w4-->
+        <plugin filename="gz-sim-joint-position-controller-system" name="gz::sim::systems::JointPositionController">
+            <joint_name>/fiar/w4_pos</joint_name>
+            <p_gain>12.0</p_gain>
+            <i_gain>0.05</i_gain>
+            <d_gain>0.1</d_gain>
+            <i_max>0.2</i_max>
+            <i_min>-0.2</i_min>
+            <cmd_max>10</cmd_max>
+            <cmd_min>-10</cmd_min>
+            <initial_position>0.0</initial_position>
+        </plugin>
+
+        <!-- ============= Neck ============= -->
+        <plugin filename="gz-sim-joint-position-controller-system" name="gz::sim::systems::JointPositionController">
+            <joint_name>/fiar/neck_pos</joint_name>
+            <p_gain>12.0</p_gain>
+            <i_gain>0.05</i_gain>
+            <d_gain>0.1</d_gain>
+            <i_max>0.2</i_max>
+            <i_min>-0.2</i_min>
+            <cmd_max>10</cmd_max>
+            <cmd_min>-10</cmd_min>
+            <initial_position>0.0</initial_position>
+        </plugin>
+        
+        <!-- ============= Head ============= -->
+        <plugin filename="gz-sim-joint-position-controller-system" name="gz::sim::systems::JointPositionController">
+            <joint_name>/fiar/head_pos</joint_name>
+            <p_gain>12.0</p_gain>
+            <i_gain>0.05</i_gain>
+            <d_gain>0.1</d_gain>
+            <i_max>0.2</i_max>
+            <i_min>-0.2</i_min>
+            <cmd_max>10</cmd_max>
+            <cmd_min>-10</cmd_min>
+            <initial_position>0.0</initial_position>
+        </plugin>
+
+
+    </gazebo>
+</robot>

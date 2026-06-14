@@ -1,0 +1,144 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="lerobot_control">
+
+   <ros2_control name="GazeboSimSystem" type="system">
+
+        <hardware>
+            <plugin>gz_ros2_control/GazeboSimSystem</plugin>
+        </hardware>
+
+    <!-- ======================= Leg 1 =========================== -->
+        <joint name="LF1">
+            <command_interface name="position">
+                <param name="gz_topic">/fiar/LF1_pos</param>
+            </command_interface>
+            <state_interface name="position"/>
+            <state_interface name="velocity"/>
+        </joint>
+
+        <joint name="LF2">
+            <command_interface name="position">
+                <param name="gz_topic">/fiar/LF2_pos</param>
+            </command_interface>
+            <state_interface name="position"/>
+            <state_interface name="velocity"/>
+        </joint>
+
+        <joint name="w1">
+            <command_interface name="velocity"> <!-- maybe ist wrong-->
+                <param name="gz_topic">/fiar/w1_pos</param>
+            </command_interface>
+            <state_interface name="position"/>
+            <state_interface name="velocity"/>
+        </joint>
+
+        <!-- ======================= Leg 2 =========================== -->
+        <joint name="RF1">
+            <command_interface name="position">
+                <param name="gz_topic">/fiar/RF1_pos</param>
+            </command_interface>
+            <state_interface name="position"/>
+            <state_interface name="velocity"/>
+        </joint>
+
+        <joint name="RF2">
+            <command_interface name="position">
+                <param name="gz_topic">/fiar/RF2_pos</param>
+            </command_interface>
+            <state_interface name="position"/>
+            <state_interface name="velocity"/>
+        </joint>
+
+        <joint name="w2">
+            <command_interface name="velocity"> <!-- maybe ist wrong-->
+                <param name="gz_topic">/fiar/w2_pos</param>
+            </command_interface>
+            <state_interface name="position"/>
+            <state_interface name="velocity"/>
+        </joint>
+
+        <!-- ======================= Leg 3 =========================== -->
+        <joint name="LB1">
+            <command_interface name="position">
+                <param name="gz_topic">/fiar/LB1_pos</param>
+            </command_interface>
+            <state_interface name="position"/>
+            <state_interface name="velocity"/>
+        </joint>
+
+        <joint name="LB2">
+            <command_interface name="position">
+                <param name="gz_topic">/fiar/LB2_pos</param>
+            </command_interface>
+            <state_interface name="position"/>
+            <state_interface name="velocity"/>
+        </joint>
+
+        <joint name="w3">
+            <command_interface name="velocity"> <!-- maybe ist wrong-->
+                <param name="gz_topic">/fiar/w3_pos</param>
+            </command_interface>
+            <state_interface name="position"/>
+            <state_interface name="velocity"/>
+        </joint>
+        
+        <!-- ======================= Leg 4 =========================== -->
+        <joint name="RB1">
+            <command_interface name="position">
+                <param name="gz_topic">/fiar/RB1_pos</param>
+            </command_interface>
+            <state_interface name="position"/>
+            <state_interface name="velocity"/>
+        </joint>
+
+        <joint name="RB2">
+            <command_interface name="position">
+                <param name="gz_topic">/fiar/RB2_pos</param>
+            </command_interface>
+            <state_interface name="position"/>
+            <state_interface name="velocity"/>
+        </joint>
+
+        <joint name="w4">
+            <command_interface name="velocity"> <!-- maybe ist wrong-->
+                <param name="gz_topic">/fiar/w4_pos</param>
+            </command_interface>
+            <state_interface name="position"/>
+            <state_interface name="velocity"/>
+        </joint>
+
+        <!-- ======================= neck =========================== -->
+        <joint name="neck_to_body">
+            <command_interface name="position">
+                <param name="gz_topic">/fiar/neck_pos</param>
+            </command_interface>
+            <state_interface name="position"/>
+            <state_interface name="velocity"/>
+        </joint>
+        
+        <!-- ======================= head =========================== -->
+        <joint name="head_to_neck">
+            <command_interface name="position">
+                <param name="gz_topic">/fiar/head_pos</param>
+            </command_interface>
+            <state_interface name="position"/>
+            <state_interface name="velocity"/>
+        </joint>
+
+   </ros2_control>
+
+   <gazebo>
+        <plugin filename="gz_ros2_control-system" name="gz_ros2_control::GazeboSimROS2ControlPlugin">
+            <parameters>$(find  fiar_pkg)/config/gz_parameters.yaml</parameters>
+            <position_proportional_gain>10.0</position_proportional_gain>
+            <position_integral_gain>0.0</position_integral_gain>
+            <position_derivative_gain>1.0</position_derivative_gain>
+            <velocity_proportional_gain>10.0</velocity_proportional_gain>
+            <velocity_integral_gain>0.0</velocity_integral_gain>
+            <velocity_derivative_gain>1.0</velocity_derivative_gain>
+        </plugin>
+    </gazebo>
+
+    <!-- <xacro:include filename="$(find  fiar_pkg)/urdf/pid_control_joint_position.urdf.xacro"/> -->
+
+</robot>

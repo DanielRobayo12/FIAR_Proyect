@@ -74,9 +74,8 @@ def generate_launch_description():
         Node(
                 package='ros_gz_bridge',
                 executable='parameter_bridge',
-                arguments=['/clock@rosgraph_msgs/msg/Clock[ignition.msgs.Clock'],
+                arguments=['/clock@rosgraph_msgs/msg/Clock[gz.msgs.Clock'],
                 output='screen',
-                namespace='fiar_gz_sim',
                 condition=IfCondition(ros_bridge),
             ),
     )
@@ -103,7 +102,7 @@ def generate_launch_description():
                 ('/tf', 'tf'),
                 ('/tf_static', 'tf_static'),
             ],
-        ),
+        )
     )
     #take arguments from the lauch
     entity = LaunchConfiguration('entity')

@@ -84,7 +84,7 @@
             <child link="${link2}"/>
             <origin xyz="0.10 0 0.03"/>
             <axis xyz="0 0 1"/>
-            <limit lower="-2" upper="2" effort="0.01" velocity="0.4"/>
+            <limit lower="-2" upper="2" effort="10" velocity="0.4"/>
             <dynamics damping="1" friction="1"/>
      </joint>
 
@@ -145,9 +145,9 @@
     <joint name="head_to_neck" type="revolute">
         <parent link="${neck}"/>
         <child link="${head}"/>
-        <origin xyz="0 0 0.155" rpy="0 1.57 0"/>
+        <origin xyz="0 0 0.095" rpy="0 1.57 0"/>
         <axis xyz="0 0 1"/>
-        <limit lower="0" upper="-3.1415" effort="0.01" velocity="0.4"/>
+        <limit lower="-3.1415" upper="0" effort="10" velocity="0.4"/>
          <dynamics damping="1" friction="1"/>
     </joint>
 </xacro:macro>

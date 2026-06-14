@@ -1,0 +1,56 @@
+controller_manager:
+  ros__parameters:
+    update_rate: 500  # Hz
+
+    joint_state_broadcaster:
+      type: joint_state_broadcaster/JointStateBroadcaster
+
+    fiar_controller:
+      type: joint_trajectory_controller/JointTrajectoryController
+
+    fiar_wheel_controller:
+      type: velocity_controllers/JointGroupVelocityController
+
+joint_state_broadcaster:
+  ros__parameters:
+    use_sim_time: true
+
+fiar_controller:
+  ros__parameters:
+    use_sim_time: true
+    joints:
+      - "LF1"
+      - "LF2"
+      - "RF1"
+      - "RF2"  
+      - "LB1"
+      - "LB2"
+      - "RB1"
+      - "RB2"
+      - "neck_to_body"
+      - "head_to_neck"
+    command_interfaces:
+      - position
+    state_interfaces:
+      - position
+      - velocity
+    state_publish_rate: 100.0
+    action_monitor_rate: 40.0
+    allow_partial_joints_goal: true
+    constraints:
+      stopped_velocity_tolerance: 0.01
+      goal_time: 0.0
+
+fiar_wheel_controller:
+  ros__parameters:
+    use_sim_time: true
+    joints:
+      - "w1"
+      - "w2"
+      - "w3"
+      - "w4"
+    command_interfaces:
+      - velocity
+    state_interfaces:
+      - position
+      - velocity
