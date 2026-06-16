@@ -26,8 +26,38 @@ A sleek, lightweight, and agile quadrupedal robot simulation and control framewo
 ## 💻 Quick Start
 
 ### 1. Clone the Workspace
-```bash
-mkdir -p catkin_ws/src
-cd catkin_ws/src
-git clone [https://github.com/DanielRobayo12/FIAR_Proyect.git](https://github.com/DanielRobayo12/FIAR_Proyect.git)
-cd ..
+
+    mkdir -p fiar_ws/src
+    cd fiar_ws/src
+    git clone https://github.com/DanielRobayo12/FIAR_Proyect.git
+    cd ..
+
+### 2. Prepare te Workspace
+
+    colcon build
+    source/install/setup.bash
+    
+### 3. Run the simulation
+
+    ros2 launch fiar_pkg control_gz.launch.py 
+
+**Note:** If you not started fast the simulation picking the start button the ros controllers can fail
+
+### 4. Check the controllers
+To check that all controllers is active run
+
+    ros2 control list_controllers
+You would see this
+
+`fiar_wheel_controller   velocity_controllers/JointGroupVelocityController      active`
+
+`fiar_controller         joint_trajectory_controller/JointTrajectoryController  active`
+
+`joint_state_broadcaster joint_state_broadcaster/JointStateBroadcaster          active`
+
+### 4. Check the controllers
+If all its okay, run the initial position
+
+    ros2 run fiar_pkg init_robot 
+---
+
