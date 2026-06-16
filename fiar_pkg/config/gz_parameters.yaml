@@ -36,7 +36,7 @@ fiar_controller:
       - velocity
     state_publish_rate: 100.0
     action_monitor_rate: 40.0
-    allow_partial_joints_goal: true
+    allow_partial_joints_goal: false
     constraints:
       stopped_velocity_tolerance: 0.01
       goal_time: 0.0

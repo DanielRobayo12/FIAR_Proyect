@@ -27,8 +27,8 @@
     </link>
 
     <!-- ========= Xacro Include Legs=========-->
-    <xacro:front_leg link1="legR1" link2="legR2" wheel="wR1" joint1="LF2" joint2="w1" />
-    <xacro:front_leg link1="legL1" link2="legL2" wheel="wL1" joint1="RF2" joint2="w2"/>
+    <xacro:front_leg link1="legL1" link2="legL2" wheel="wL1" joint1="LF2" joint2="w1" />
+    <xacro:front_leg link1="legR1" link2="legR2" wheel="wR1" joint1="RF2" joint2="w2"/>
     <xacro:front_leg link1="legBackR1" link2="legBackR2" wheel="wR2" joint1="RB2" joint2="w3"/>
     <xacro:front_leg link1="legBackL1" link2="legBackL2" wheel="wL2" joint1="LB2" joint2="w4"/>
     <!-- === Xacro Include Head ====-->
@@ -37,39 +37,39 @@
     <!-- === leg1_to_body ===-->
     <joint name="LF1" type="revolute">
         <parent link="body"/>
-        <child link="legR1"/>
+        <child link="legL1"/>
         <origin xyz="0.125 0.1 0" rpy="1.5707 0 0"/>
         <axis xyz="0 0 1"/>
-        <limit lower="-3.1415" upper="0" effort="10" velocity="0.4"/>
+        <limit lower="-3.1415" upper="0" effort="10" velocity="2"/>
         <dynamics damping="1" friction="1"/>
     </joint>
     <!-- === leg2_to_body ===-->
     <joint name="RF1" type="revolute">
         <parent link="body"/>
-        <child link="legL1"/>
+        <child link="legR1"/>
         <origin xyz="0.125 -0.1 0" rpy="-1.5707 0 0"/>
         <axis xyz="0 0 -1"/>
-        <limit lower="-3.1415" upper="0" effort="10" velocity="0.4"/>
+        <limit lower="-3.1415" upper="0" effort="10" velocity="2"/>
         <dynamics damping="1" friction="1"/>
     </joint>
 
     <!-- === leg3_to_body === -->
-    <joint name="LB1" type="revolute"> 
+    <joint name="RB1" type="revolute"> 
         <parent link="body"/>
         <child link="legBackR1"/>
         <origin xyz="-0.125 0.1 0" rpy="1.5707 0 0"/>
         <axis xyz="0 0 1"/>
-        <limit lower="-3.1415" upper="0" effort="10" velocity="0.4"/>
+        <limit lower="-3.1415" upper="0" effort="10" velocity="2"/>
         <dynamics damping="1" friction="1"/>
     </joint>
     
     <!-- === leg4_to_body ===-->
-    <joint name="RB1" type="revolute">
+    <joint name="LB1" type="revolute">
         <parent link="body"/>
         <child link="legBackL1"/>
         <origin xyz="-0.125 -0.1 0" rpy="-1.5707 0 0"/>
         <axis xyz="0 0 -1"/>
-        <limit lower="-3.1415" upper="0" effort="10" velocity="0.4"/>
+        <limit lower="-3.1415" upper="0" effort="10" velocity="2"/>
          <dynamics damping="1" friction="1"/>
     </joint>
 
@@ -79,7 +79,7 @@
         <child link="neck"/>
         <origin xyz="0.14 0 0.0875"/>
         <axis xyz="0 0 1"/>
-        <limit lower="-3.1415" upper="0" effort="10" velocity="0.4"/>
+        <limit lower="-3.1415" upper="0" effort="10" velocity="2"/>
          <dynamics damping="1" friction="1"/>
     </joint>
 

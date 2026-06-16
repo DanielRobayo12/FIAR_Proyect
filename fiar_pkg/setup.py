@@ -40,6 +40,8 @@ setup(
     },
     entry_points={
         'console_scripts': [
+            'tester_robot = fiar_pkg.tester_robot:main',
+            'init_robot = fiar_pkg.init_robot:main',
         ],
     },
 )
