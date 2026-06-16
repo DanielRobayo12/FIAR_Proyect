@@ -60,4 +60,5 @@ If all its okay, run the initial position
 
     ros2 run fiar_pkg init_robot 
 ---
-
+## 🐈 Now you can see the **Demo**
+<img width="928" height="622" alt="Image" src="https://github.com/user-attachments/assets/3ebad844-2444-4e54-bb7b-0a0eb6859e7f" />
