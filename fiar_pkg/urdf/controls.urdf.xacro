@@ -130,15 +130,15 @@
    <gazebo>
         <plugin filename="gz_ros2_control-system" name="gz_ros2_control::GazeboSimROS2ControlPlugin">
             <parameters>$(find  fiar_pkg)/config/gz_parameters.yaml</parameters>
-            <position_proportional_gain>10.0</position_proportional_gain>
+            <!-- <position_proportional_gain>10.0</position_proportional_gain>
             <position_integral_gain>0.0</position_integral_gain>
             <position_derivative_gain>1.0</position_derivative_gain>
             <velocity_proportional_gain>10.0</velocity_proportional_gain>
             <velocity_integral_gain>0.0</velocity_integral_gain>
-            <velocity_derivative_gain>1.0</velocity_derivative_gain>
+            <velocity_derivative_gain>1.0</velocity_derivative_gain> -->
         </plugin>
     </gazebo>
 
-    <!-- <xacro:include filename="$(find  fiar_pkg)/urdf/pid_control_joint_position.urdf.xacro"/> -->
+    <xacro:include filename="$(find  fiar_pkg)/urdf/pid_control_joint_position.urdf.xacro"/>
 
 </robot>

@@ -12,7 +12,7 @@
      <!-- === LINK 1 ====-->
     <link name="${link1}">
         
-        <visual>
+        <visual> 
             <geometry>
                 <box size="0.13 0.05 0.03"/>
             </geometry>
@@ -84,7 +84,7 @@
             <child link="${link2}"/>
             <origin xyz="0.10 0 0.03"/>
             <axis xyz="0 0 1"/>
-            <limit lower="-2" upper="2" effort="10" velocity="0.4"/>
+            <limit lower="-2" upper="2" effort="10" velocity="1"/>
             <dynamics damping="1" friction="1"/>
      </joint>
 

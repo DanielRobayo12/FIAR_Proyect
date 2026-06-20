@@ -1,3 +1,4 @@
+from ament_index_python import packages
 import rclpy
 import math
 from trajectory_msgs.msg import JointTrajectory, JointTrajectoryPoint
@@ -5,122 +6,22 @@ from builtin_interfaces.msg import Duration
 from std_msgs.msg import Float64MultiArray
 from sensor_msgs.msg import JointState
 from typing import List
+import time
 
 #global variables
 
 pub1 = None
 pub2 = None
-key = False
-key2 = False
+actual_position = [0.0]*10
 name_joints = ["LF1","LF2","RF1","RF2","LB1","LB2","RB1","RB2","neck_to_body","head_to_neck"]
 name_wheels = ["w1","w2","w3","w4"]
-actual_position = None
-#---------------------------------- Verify Pose ----------------------------------
-def verificar_pose_alcanzada(pose_actual: List[float], pose_objetivo: List[float]) -> bool:
-    # Margen de error tolerado en radianes (aprox 0.5 grados de diferencia)
-    tolerancia = 0.008 
-    
-    # Comparamos joint por joint
-    for i in range(len(pose_actual)):
-        if not math.isclose(pose_actual[i], pose_objetivo[i], abs_tol=tolerancia):
-            # Con un solo joint que esté fuera de rango, el robot aún no llega
-            return False 
-            
-    return True
-#---------------------------------- Callback Joint States ----------------------------------
-def callback_joint_states(msg: JointState):
-    global actual_position
-    joint_states = msg
-
-    actual_position = joint_states.position
-
-
-#---------------------------------- Pose 1 ----------------------------------
-def pose1():
-    global pub1
-    global pub2
-    global key
-    global name_joints
-    global name_wheels
-    point= JointTrajectoryPoint()
-    joint = JointTrajectory()
-    wheels = Float64MultiArray()
-
-    #           LF1     LF2     RF1     RF2     LB1    LB2     RB1     RB2    Neck   Head  
-    position = [-0.785, 0.785, -0.785, -0.785, -0.785, -0.785, -0.785, 0.785, 0.0, 0.0]
-    velocity_joints = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
-    velocity_wheels = [0.0, 0.0, 0.0, 0.0]
-    
-    #assigning parameters to message JointTrajectoryPoint
-    point.positions = position
-    point.velocities = velocity_joints
-    point.time_from_start = Duration(sec=0,nanosec=500000000)
-
-    #assigning parameters to message JointTrajectory
-    joint.points.append(point)
-    joint.joint_names = name_joints
-
-    #assigning parameters to message Float32MultiArray
-    wheels.data = velocity_wheels
-
-    for i in range(0, len(name_joints)):
-        print(f"{name_joints[i]}: {position[i]}")
-    for i in range(0, len(name_wheels)):
-        print(f"{name_wheels[i]}: {velocity_wheels[i]}")
-
-    if verificar_pose_alcanzada(position, position):
-        key = True
-
-    pub1.publish(joint)
-    pub2.publish(wheels) 
-
-#---------------------------------- Pose 2 ----------------------------------
-def pose2():
-    global pub1
-    global pub2
-    global key2
-    global name_joints
-    global name_wheels
-    point= JointTrajectoryPoint()
-    joint = JointTrajectory()
-    wheels = Float64MultiArray()
-
-    #           LF1     LF2     RF1     RF2     LB1    LB2     RB1     RB2    Neck   Head  
-    position = [-0.785, 0.785, -0.785, -0.785, -2.356, -0.785, -2.356, 0.785, 0.0, 0.0]
-    velocity_joints = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
-    velocity_wheels = [0.0, 0.0, 0.0, 0.0]
-    
-    #assigning parameters to message JointTrajectoryPoint
-    point.positions = position
-    point.velocities = velocity_joints
-    point.time_from_start = Duration(sec=0,nanosec=500000000)
-
-    #assigning parameters to message JointTrajectory
-    joint.points.append(point)
-    joint.joint_names = name_joints
-
-    #assigning parameters to message Float32MultiArray
-    wheels.data = velocity_wheels
-
-    for i in range(0, len(name_joints)):
-        print(f"{name_joints[i]}: {position[i]}")
-    for i in range(0, len(name_wheels)):
-        print(f"{name_wheels[i]}: {velocity_wheels[i]}")
-
-    if verificar_pose_alcanzada(position, position):
-        key2 = True
-
-    pub1.publish(joint)
-    pub2.publish(wheels) 
+velocity_joints = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+velocity_wheels = [0.0, 0.0, 0.0, 0.0]
 
 #---------------------------------- Main ----------------------------------
 def main():
     global pub1
     global pub2
-    global key
-    global actual_position
-
-    #init ros2
     rclpy.init()
 
     #create a node
@@ -129,21 +30,11 @@ def main():
     #create a publisher
     pub1 = node.create_publisher(JointTrajectory,"/fiar_controller/joint_trajectory",10)
     pub2 = node.create_publisher(Float64MultiArray,"/fiar_wheel_controller/commands",10)
-    sub1 = node.create_subscription(JointState, "/joint_states", 10, callback_joint_states)
+    sub1 = node.create_subscription(JointState, "/joint_states", callback_joint_states,10)
 
-    key = verificar_pose_alcanzada(position, position)
-
-    if not key:
-        node.create_timer(2.0,pose1)
-        print("xd")
-        
-    elif key==True:
-        node.create_timer(2.0,pose2)
-        print("xdd")
-
-    
-    
-
+    #Create a timer
+    node.create_timer(0.1,loop)
+      
     #keep alive the node
     rclpy.spin(node)
 
@@ -151,5 +42,76 @@ def main():
     rclpy.shutdown()
     node.destroy_node()
 
+#---------------------------------- Loop ----------------------------------
+def loop():
+    global pub1, pub2
+    global name_joints, name_wheels, actual_position
+    key = False  
+    #           LF1     LF2     RF1     RF2     LB1    LB2     RB1     RB2    Neck   Head 
+    position1 = [-0.785, 0.785, 0.785, -0.785, -0.785, 0.785, 0.785, -0.785, 0.0, 0.0]
+    position2 = [-0.785, 0.785, -0.785, -0.785, -2.356, -0.785, -2.356, 0.785, 0.0, 0.0]
+
+    key = verify_pose(actual_position, position1)
+    print(f"KEY: {key}")
+    print(f"Actual: {actual_position}")
+    print(f"Actual: {position1}")
+    match key:
+        case False:
+            pose(position1)
+        case True:
+            pose(position2)
+            
+    
+    
+#---------------------------------- pose1 ----------------------------------
+def pose(position_a):
+    global pub1, pub2, velocity_wheels
+    global name_joints, name_wheels, velocity_joints
+    
+    point= JointTrajectoryPoint()
+    joint = JointTrajectory()
+    wheels = Float64MultiArray()
+    
+    #assigning parameters to message JointTrajectoryPoint
+    point.positions = position_a
+    point.velocities = velocity_joints
+    point.time_from_start = Duration(sec=0,nanosec=2000000000)
+
+    #assigning parameters to message 
+    joint.points.append(point)
+    joint.joint_names = name_joints
+    wheels.data = velocity_wheels
+
+    #publish
+    pub1.publish(joint)
+    pub2.publish(wheels) 
+#---------------------------------- Verify Pose ----------------------------------
+def verify_pose(lista1, lista2, tolerancia=0.01):
+    # Verificar que tengan el mismo tamaño
+    if len(lista1) != len(lista2):
+        print("The lists do not have the same size")
+        return False
+
+    # Comparar elemento por elemento
+    for a, b in zip(lista1, lista2):
+        if abs(a - b) > tolerancia:
+            return False
+
+    return True
+#---------------------------------- Callback Joint States --------------------------------
+def callback_joint_states(msg: JointState):
+    global actual_position
+    joint_states = msg
+    actual_position = joint_states.position
+    actual_position = actual_position[:-4]
+
+#---------------------------------- print pose ------------------------------------------
+def print_pose(position, velocity_wheels):
+    for i in range(0, len(name_joints)):
+        print(f"{name_joints[i]}: {position[i]}")
+    for i in range(0, len(name_wheels)):
+        print(f"{name_wheels[i]}: {velocity_wheels[i]}")
+
+#------------------------------------------------------------------------------------
 if __name__ == "__main__":
     main()

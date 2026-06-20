@@ -52,6 +52,20 @@ def generate_launch_description():
         output='screen'
     )
 
+    # Spawn the head controller.
+    spawn_fiar_head_controller = Node(
+        package='controller_manager',
+        executable='spawner',
+        name='fiar_head_controller',
+        arguments=[
+            'fiar_head_controller',
+            '--controller-manager', '/controller_manager',
+            '--controller-manager-timeout', '120'
+        ],
+        parameters=[{'use_sim_time': use_sim_time}],
+        output='screen'
+    )
+
     return LaunchDescription([
         DeclareLaunchArgument(
             'use_sim_time',
@@ -63,7 +77,7 @@ def generate_launch_description():
 
         TimerAction(
             period=2.0,
-            actions=[spawn_fiar_controller, spawn_fiar_wheel_controller]
+            actions=[spawn_fiar_controller, spawn_fiar_wheel_controller,spawn_fiar_head_controller]
         ),
         
     ])

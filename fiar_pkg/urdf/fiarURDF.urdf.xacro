@@ -48,15 +48,15 @@
         <parent link="body"/>
         <child link="legR1"/>
         <origin xyz="0.125 -0.1 0" rpy="-1.5707 0 0"/>
-        <axis xyz="0 0 -1"/>
-        <limit lower="-3.1415" upper="0" effort="10" velocity="2"/>
+        <axis xyz="0 0 1"/>
+        <limit lower="0" upper="3.1415" effort="10" velocity="2"/>
         <dynamics damping="1" friction="1"/>
     </joint>
-
+ 
     <!-- === leg3_to_body === -->
-    <joint name="RB1" type="revolute"> 
+    <joint name="LB1" type="revolute"> 
         <parent link="body"/>
-        <child link="legBackR1"/>
+        <child link="legBackL1"/>
         <origin xyz="-0.125 0.1 0" rpy="1.5707 0 0"/>
         <axis xyz="0 0 1"/>
         <limit lower="-3.1415" upper="0" effort="10" velocity="2"/>
@@ -64,12 +64,12 @@
     </joint>
     
     <!-- === leg4_to_body ===-->
-    <joint name="LB1" type="revolute">
+    <joint name="RB1" type="revolute">
         <parent link="body"/>
-        <child link="legBackL1"/>
+        <child link="legBackR1"/>
         <origin xyz="-0.125 -0.1 0" rpy="-1.5707 0 0"/>
-        <axis xyz="0 0 -1"/>
-        <limit lower="-3.1415" upper="0" effort="10" velocity="2"/>
+        <axis xyz="0 0 1"/>
+        <limit lower="0" upper="3.1415" effort="10" velocity="2"/>
          <dynamics damping="1" friction="1"/>
     </joint>
 
