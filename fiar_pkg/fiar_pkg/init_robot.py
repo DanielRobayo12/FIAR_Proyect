@@ -12,10 +12,11 @@ import time
 
 pub1 = None
 pub2 = None
-actual_position = [0.0]*10
-name_joints = ["LF1","LF2","RF1","RF2","LB1","LB2","RB1","RB2","neck_to_body","head_to_neck"]
+key = False 
+actual_position = [0.0]*8
+name_joints = ["LF1","LF2","RF1","RF2","LB1","LB2","RB1","RB2"]
 name_wheels = ["w1","w2","w3","w4"]
-velocity_joints = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+velocity_joints = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
 velocity_wheels = [0.0, 0.0, 0.0, 0.0]
 
 #---------------------------------- Main ----------------------------------
@@ -44,22 +45,25 @@ def main():
 
 #---------------------------------- Loop ----------------------------------
 def loop():
-    global pub1, pub2
+    global pub1, pub2, key
     global name_joints, name_wheels, actual_position
-    key = False  
-    #           LF1     LF2     RF1     RF2     LB1    LB2     RB1     RB2    Neck   Head 
-    position1 = [-0.785, 0.785, 0.785, -0.785, -0.785, 0.785, 0.785, -0.785, 0.0, 0.0]
-    position2 = [-0.785, 0.785, -0.785, -0.785, -2.356, -0.785, -2.356, 0.785, 0.0, 0.0]
+     
+    #           LF1     LF2     RF1     RF2     LB1    LB2     RB1     RB2    
+    position1 = [-0.785, 0.785, 0.785, -0.785, -0.785, 0.785, 0.785, -0.785]
+    position2 = [-0.785, 0.785, -0.785, -0.785, -2.356, -0.785, -2.356, 0.785]
 
-    key = verify_pose(actual_position, position1)
+    if key == False:
+        key = verify_pose(actual_position, position1)
+
     print(f"KEY: {key}")
     print(f"Actual: {actual_position}")
-    print(f"Actual: {position1}")
+    print(f"Goal: {position1}")
     match key:
         case False:
             pose(position1)
         case True:
-            pose(position2)
+            #pose(position2)
+            pass
             
     
     
@@ -86,7 +90,7 @@ def pose(position_a):
     pub1.publish(joint)
     pub2.publish(wheels) 
 #---------------------------------- Verify Pose ----------------------------------
-def verify_pose(lista1, lista2, tolerancia=0.01):
+def verify_pose(lista1, lista2, tolerancia=0.1):
     # Verificar que tengan el mismo tamaño
     if len(lista1) != len(lista2):
         print("The lists do not have the same size")
@@ -100,10 +104,16 @@ def verify_pose(lista1, lista2, tolerancia=0.01):
     return True
 #---------------------------------- Callback Joint States --------------------------------
 def callback_joint_states(msg: JointState):
-    global actual_position
+    global actual_position, name_joints
     joint_states = msg
-    actual_position = joint_states.position
-    actual_position = actual_position[:-4]
+    names = joint_states.name
+
+    #Organize the order of positions like the position1 array order
+    for i in range(len(name_joints)):
+        for j in range(len(actual_position)):
+
+            if name_joints[i] == names[j]:
+                actual_position[i] = joint_states.position[j]
 
 #---------------------------------- print pose ------------------------------------------
 def print_pose(position, velocity_wheels):
